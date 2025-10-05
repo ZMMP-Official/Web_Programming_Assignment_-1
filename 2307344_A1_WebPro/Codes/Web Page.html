@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zayne's Website</title>
+    <link rel="icon" type="image/svg+xml" href="../Assets/dragon-favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fde06c 0%, #1a1a1a 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: linear-gradient(90deg, #000000 0%, #333333 100%);
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #fde06c;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            color: #fde06c;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fde06c;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(253, 220, 92, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background-color: rgba(253, 220, 92, 0.2);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: #fde06c;
+            font-size: 1.5rem;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #fde06c;
+            margin-bottom: 30px;
+            font-size: 2.8rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        h2 {
+            color: #fde06c;
+            margin: 30px 0 15px;
+            border-bottom: 2px solid #fde06c;
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: #fde06c;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+        
+        .centered-text {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 224, 108, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #f5f5f5;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card i {
+            font-size: 2rem;
+            color: #fde06c;
+            margin-bottom: 15px;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .profile-img {
+            border-radius: 10px;
+            border: 3px solid #fde06c;
+            transition: transform 0.3s ease;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .resume-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .resume-iframe {
+            width: 80%;
+            height: 500px;
+            border: 2px solid #fde06c;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #fde06c;
+        }
+        
+        a[target="_blank"]::after {
+            content: " \f08e";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        
+        blockquote {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #fde06c;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        /* Design System Styles */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .color-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .typography-section, .icons-section, .dimensions-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .font-card, .icon-card, .dimension-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(253, 224, 108, 0.3);
+        }
+
+        .icon-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-card i {
+            color: #fde06c;
+            font-size: 2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #1a1a1a;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                margin: 10px 0;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .resume-iframe {
+                width: 95%;
+                height: 400px;
+            }
+            
+            .feature-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" data-page="welcome">
+                <i class="fas fa-dragon"></i>Zayne's Website
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="welcome">Welcome</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="professional">Professional</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="personality">Personality</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="development">Development</a>
+                </li>
+		<li class="nav-item">
+                    <a href="#" class="nav-link" data-page="storyboard">Storyboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <!-- Welcome Page -->
+        <div class="page active" id="welcome">
+            <h1>Welcome to My Website</h1>
+            <p class="centered-text">Welcome reader! This is my submission for a web programming class assignment.</p>
+            
+            <h2>Fun Facts about the Universe</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-star"></i>
+                    <h3>More Stars Than Sand</h3>
+                    <p>There are more stars in the universe than grains of sand on all the beaches on Earth, an estimated 1 septillion stars (a 1 followed by 24 zeros).</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-star-and-crescent"></i>
+                    <h3>Galaxies Galore</h3>
+                    <p>There are estimated to be around 2 trillion galaxies in the observable universe.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-atom"></i>
+                    <h3>Cosmic Expansion</h3>
+                    <p>The entire universe is constantly expanding, meaning it's getting bigger every second.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div class="page" id="about">
+            <h1>About Me</h1>
+            <p class="centered-text">Hello my name is Zayne-Michael Merrick Plummer and you are reading my very first proper website.<br> I'm a student in university and this was an assignment for a class.<br> As of creating this I'm a 19 years old male and I'm a proud, living and breathing Jamaican.</p>
+            
+            <div class="image-container">
+                <a href="mailto:ZAYNE-MICHAELMPLUMMER.students.utech.edu.jm@outlook.com">
+                    <img src="../Assets/Me.jpg" style="border-style:solid;border-color:white" align="center" height="500" width="300" alt="Error01:Check your code"/>
+                </a>
+            </div>
+            
+            <div class="centered-text">
+                <a href="https://youtu.be/450p7goxZqg?si=2NQhKkYY_NY_HVOy" target="_blank" class="nav-link" style="display: inline-block; margin-top: 10px;">A Good Song</a>
+            </div>
+        </div>
+
+        <!-- Professional Page -->
+        <div class="page" id="professional">
+            <h1>Professional</h1>
+            <p>Here is the Professional Segment of the Assignment</p>
+            
+            <h2>Resume</h2>
+            <div class="resume-container">
+                <iframe name="resume" src="../Assets/Zayne Plummer's Resume.pdf" height="400" width="100%"> </iframe>
+            </div>
+            
+            <h2>Career Statements</h2>
+            <ul>
+                <li><strong>Vision Statement:</strong> I will become an accomplished and successful Software Engineer</li>
+                <li><strong>Mission Statement:</strong> I will graduate and hold my bachelor on the stage in my graduation gown.</li>
+            </ul>
+        </div>
+
+        <!-- Personality Page -->
+        <div class="page" id="personality">
+            <h1>Personality</h1>
+            <p>Here is the Personality Segment of the Assignment.</p>
+            
+            <h2>My Top Three Strengths</h2>
+            <ol>
+                <li><strong>Clear Communication:</strong> I'm good at understanding people, so I'm able to craft a message they can understand. During school this has helped me during group projects, getting clarification from teachers and increases my overall likeability.</li>
+                <li><strong>Patience:</strong> I have high patience as a person. This helps me analyze situations better even under a stressful situation. Being able to keep a cool head has helped me on tests, dealing with bullying and preventing breakdowns.</li>
+                <li><strong>Creativity:</strong> I have great imagination and understanding of perspective. Ideas come to me quickly although not all are gold. This helped me in school with assignments like this for example.</li>
+            </ol>
+            
+            <h2>One of my favourite quotes</h2>
+            <blockquote>
+                <p>"If I may ? I would like to pose an intresting question.<br> Are all human beings truly <b>equal ?</b><br>These days <b>everywhere</b> you go there's talk about the fight for <b>equality.</b><br> As a <b>wise man</b> once said... Heaven does not create one person <b>above</b> or <b>below</b> another.<br> People like to throw <b>his words</b> around but that's not the <b>whole quote.</b><br> He goes onto say that while we are <b>equal at birth.</b> Pretty soon things <b>begin to change.</b><br> Academic effort is what sets <b>some people apart</b> to rise above the <b>others.</b><br>At any rate humans change <b>over time.</b> Based on their <b>actions</b>.<br> <b>Truth be told</b> at the end of the day. <b>Equality is just a fantasy</b><br> and most of us go through life denying the fact we live in a <b>meritocracy</b>."<br> "Equality is just a fantasy" by Kiyotaka Ayanokoji.</p>
+            </blockquote>
+            
+            <p>Audio version:</p>
+            <audio controls>
+                <source src="../Assets/Equality.mp3" type="audio/mpeg">
+            </audio>
+            
+            <h3>Background and Reasons</h3>
+            <p>Kiyotaka Ayanokoji is a fictional character from the series Classroom Of The Elite. He is a student but a very intelligent one.<br> This quote of his reminds me of an importance piece of reality that no one is truly equal.<br> This motivates me to always be better than yesterday to be the one on top instead of the bottom.</p>
+            
+            <h2>AI-powered virtual assistants</h2>
+            <p>My favourite idea from the blog(<a href="https://clickup.com/blog/ai-business-ideas/?utm_source=google&utm_medium=cpc&utm_campaign=gs_cpc_arlv_nnc_nb_trial_all-devices_troas_lp_x_all-departments_x_taskmanagement&utm_content=all-countries_kw-target_text_all-industries_all-features_all-use-cases_ai_phrase&utm_term=&utm_creative=713306049272_dynamic_rsa&utm_custom1=&utm_custom2=&utm_lptheme=&utm_lpmod=&utm_mt=b&gad_source=1&gad_campaignid=20991268246&gbraid=0AAAAACR5vILU0g-x04iCx87mMamUTeoIH&gclid=CjwKCAjwz5nGBhBBEiwA-W6XRIQZsF7yLDP16BfpWsbYikH4E69bDednyP7xS9c0EhczOSDfi7TX_xoCmeYQAvD_BwE" target="_blank" style="color: #fde06c;">AI Businesses of 2025</a>) is AI-poweered virtual assitants. This has been one of the more sucessful buisness ideas but it's a competive market with some examples like ChatGPT, Deepseek, Google Assistant and Meta AI.<br> Creating a succesfull and imporved version of the competing products would be worth alot of money.<br> THe main ethical issues with this software is privacy issues, company selling your digital data for money.<br> There are laws against this practice but that's not fully comforting to most people.<br> There are service offered to counteract this unethical practice (eg.NordVPN, ExpressVPN).<br> These softwares can help you protect your information.<br> Here's an example of an AI-powered visiual assistant to try out <a href="https://chatgpt.com" target="_blank" style="color: #fde06c;">ChatGPT!</a></p>
+        </div>
+
+        <!-- Personal Development -->
+        <div class="page" id="development">
+            <h1>Personal Development</h1>
+            <p>Here is the Personal Developmet Segment of the Assignment</p>
+            <p>I Have read chapters 4 – 7 of "Twelve Pillars" by Jim Rohn and Chris Widener [pp. 43 – 80]. This is my personal reflection on the chapters.</p>
+            
+            <h2>First Pillar: Achieve Your Goals (pages 43-52)</h2>
+            <p>In this chapter, Michael meets Charlie at Mack's Diner, where they discuss Michael's progress with his relationships and then delve into the crucial topic of goal-setting.<br>Charlie emphasizes that Michael's lack of career progression might be directly linked to not having clear goals.<br>The core message from Mr. Davis is simple yet profound: <b>"Write it down."</b> Writing down goals, especially a list of one hundred things you want to achieve before you die, brings them into reality and makes your mind "cognitively aware" of them.<br>Charlie also shares Mr. Davis's powerful wisdom: <b>"The major reason for setting a goal is for what it makes of you to accomplish it."</b><br> The personal growth and transformation required to achieve a goal are often more valuable than the goal itself.<br> The chapter introduces the concept of setting long-range (10-year), mid-range (5-year), and short-range (1-2 year) goals, along with "micro-goals" (monthly), all designed to lead to the ultimate objective.<br> Mr. Davis famously states, <b>"You cannot change your destination overnight, but you can change your direction overnight."</b></p>
+            
+            <h3>Personal Insight</h3>
+            <p>After I read this chapeter I can relate this to my own change in life during past struggles.<br> Feeling the imense weight of a goal left me hopeless, but having an objectives list or just writing it down.<br> Gave me drive, the goal wasn't an insurmountable mountain to climb anymore.</p>
+            
+            <h2>Second Pillar: The Proper Use of Time (pages 53-56)</h2>
+            <p>Michael expresses his struggle with finding time for goal-setting amid his busy life. Charlie responds with a powerful quote from Mr. Davis: <b>"We must all suffer from one of two pains: The pain of discipline or the pain of regret. The difference is discipline weighs ounces while regret weighs tons."</b><br>This highlights the long-term cost of inaction versus the short-term effort of discipline.<br> Charlie emphasizes that "days are expensive" and must be spent wisely, focusing on the "one best opportunity" that aligns with overall goals, rather than just reacting to the "urgent." Mr. Davis warns that if you don't design your own life plan, you'll fall into someone else's, who likely hasn't planned "much" for you.<br> The chapter concludes with the idea that <b>"Either you run the day or the day runs you. Either you control your time or it controls you. Take your pick."</b></p>
+            
+            <h3>Personal Insight</h3>
+            <p>This whole chapter describes both the misery and the salvation to it in my life.<br> I've had always had a bad sense of time when it comes to telling the estimated amout of time for an activity.<br>Setting my own schedule has saved me from the nightmare of procrastination.</p>
+            
+            <h2>Third Pillar: Surround Yourself With the Best People (pages 57-70)</h2>
+            <p>Michael shares his progress with Charlie, including his written goals. Charlie then introduces the Pillar of <b>"Surround yourself with the best."</b><br> This doesn't mean material possessions, but rather the "best people"—winners and successful individuals whose values and skills you admire.<br> Mr. Davis's critical questions are: "Who am I around? What effect are they having on me? What have they got me reading? What have they got me saying? Where do they have me going? What do they have me thinking? And most importantly, what do they have me becoming? Then ask yourself the big question: Is that okay?"<br>Charlie explains that every association has a positive, neutral, or negative effect, leading to three types: disassociation, limited association, and expanded association.<br> He uses the analogy of maintaining a pool's pH balance to illustrate how relationships need careful management to avoid negative influences. He challenges Michael to consider if his long-time friends are "friends of convenience" rather than those who challenge him to grow.<br> Mr. Davis's advice for attracting successful people is: <b>"To attract attractive people you must be attractive. To attract powerful people you must be powerful. To attract committed people you must be committed.<br> Instead of going to work on them, go to work on yourself.<br> If you become, you can attract."</b><br>Surrounding yourself with successful people leads to new knowledge, a vast network, and most importantly, a positive attitude, which Mr. Davis believes is "ninety-nine percent of life."</p>
+            
+            <h3>Personal Insight</h3>
+            <p>This chapter makes me feel greatful for my group of friends.</p>
+            
+            <h2>Fourth Pillar: Be a Life-Long Learner (pages 71-80)</h2>
+            <p>Charlie and Michael discuss the importance of continuous learning. Charlie reveals Mr. Davis's next Pillar: <b>"A successful person is always a life-long learner."</b><br>A key distinction is made between formal education and self-education: <b>"Formal education will make you a living. Self-education will make you a fortune."</b><br>Michael initially dismisses reading, but Charlie passionately argues for its value, quoting Mr. Davis: <b>"It isn't what the book costs. It's what it will cost you if you don't read it."</b><br>Books open new worlds, ideas, and are seeds for achievement.Mr. Davis's wisdom continues: <b>"If someone is going down the wrong path, he doesn't need motivation to speed him up.He needs education to turn him around. Learning is the beginning of wealth. Learning is the beginning of health. Learning is the beginning of spirituality. Searching and learning is where the miracle process all begins."</b><br>The three mainstays of learning are identified as reading books, learning from successful people by observation, and constantly reflecting on personal experiences.<br> The chapter ends with Charlie giving Michael a copy of "The Magic of Thinking Big," insisting he read it before their next meeting.</p>
+            
+            <h3>Personal Insight</h3>
+            <p>A golden rule of my life that I follow and was taught early by the most important in my life.</p>
+        </div>
+
+        <!-- Storyboard Page -->
+        <div class="page" id="storyboard">
+            <h1>Storyboard</h1>
+            <p>The storyboard section of the assignment.</p>
+            
+            <h2>Desktop Layout</h2>
+            <div class="image-container">
+                <img src="../Assets/desktop-layout.png" alt="Desktop Layout Wireframe" class="profile-img">
+            </div>
+            <p><strong>Layout Components:</strong> Horizontal navbar, centered content container, footer</p>
+            
+            <h2>Mobile Layout</h2>
+            <div class="image-container">
+                <img src="../Assets/mobile-layout(closed).png" alt="Mobile Layout Wireframe" class="profile-img">
+            </div>
+            <p><strong>Layout Components:</strong> Hamburger menu, vertically stacked content, collapsible navigation</p>
+            
+            <h3>Key Differences</h3>
+            <ul>
+                <li><strong>Navigation:</strong> Horizontal menu (desktop) vs. Hamburger menu (mobile)</li>
+                <li><strong>Content Layout:</strong> Grid-based (desktop) vs. Stacked vertically (mobile)</li>
+                <li><strong>Typography:</strong> Larger fonts (desktop) vs. Optimized for small screens (mobile)</li>
+            </ul>
+
+            <h2>Color Palette</h2>
+            <div class="color-palette">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #fde06c;"></div>
+                    <div class="color-info">
+                        <p><strong>Primary Gold</strong></p>
+                        <p>RGB: 253, 224, 108</p>
+                        <p>HEX: #fde06c</p>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #1a1a1a;"></div>
+                    <div class="color-info">
+                        <p><strong>Dark Background</strong></p>
+                        <p>RGB: 26, 26, 26</p>
+                        <p>HEX: #1a1a1a</p>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #000000;"></div>
+                    <div class="color-info">
+                        <p><strong>Pure Black</strong></p>
+                        <p>RGB: 0, 0, 0</p>
+                        <p>HEX: #000000</p>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #333333;"></div>
+                    <div class="color-info">
+                        <p><strong>Dark Gray</strong></p>
+                        <p>RGB: 51, 51, 51</p>
+                        <p>HEX: #333333</p>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #f5f5f5;"></div>
+                    <div class="color-info">
+                        <p><strong>Light Text</strong></p>
+                        <p>RGB: 245, 245, 245</p>
+                        <p>HEX: #f5f5f5</p>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #e0e0e0;"></div>
+                    <div class="color-info">
+                        <p><strong>Secondary Text</strong></p>
+                        <p>RGB: 224, 224, 224</p>
+                        <p>HEX: #e0e0e0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography Section -->
+            <h2>Typography</h2>
+            <div class="typography-section">
+                <div class="font-card">
+                    <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        Primary Font Family
+                    </h3>
+                    <p><strong>Font Stack:</strong> 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif</p>
+                    <p><strong>Usage:</strong> Body text, headings, navigation</p>
+                </div>
+                <div class="font-card">
+                    <h3 style="font-family: 'Courier New', monospace;">
+                        Monospace Font
+                    </h3>
+                    <p><strong>Font Stack:</strong> 'Courier New', monospace</p>
+                    <p><strong>Usage:</strong> Code blocks, technical content</p>
+                </div>
+                <div class="font-weights">
+                    <h3>Font Weights</h3>
+                    <p><strong>Normal:</strong> 400 (default)</p>
+                    <p><strong>Medium:</strong> 500 (navigation links)</p>
+                    <p><strong>Bold:</strong> 700 (headings, strong emphasis)</p>
+                </div>
+            </div>
+
+            <!-- Icons Section -->
+            <h2>Icons & Dimensions</h2>
+            <div class="icons-section">
+                <div class="icon-card">
+                    <i class="fas fa-dragon fa-2x"></i>
+                    <div class="icon-info">
+                        <p><strong>Logo Icon</strong></p>
+                        <p>Font Awesome: fas fa-dragon</p>
+                        <p>Size: 1.8rem (28.8px)</p>
+                    </div>
+                </div>
+                <div class="icon-card">
+                    <i class="fas fa-bars fa-2x"></i>
+                    <div class="icon-info">
+                        <p><strong>Hamburger Menu</strong></p>
+                        <p>Font Awesome: fas fa-bars</p>
+                        <p>Size: 1.5rem (24px)</p>
+                    </div>
+                </div>
+                <div class="icon-card">
+                    <i class="fas fa-star fa-2x"></i>
+                    <div class="icon-info">
+                        <p><strong>Feature Icons</strong></p>
+                        <p>Font Awesome: Various</p>
+                        <p>Size: 2rem (32px)</p>
+                    </div>
+                </div>
+                <div class="icon-card">
+                    <i class="fas fa-times fa-2x"></i>
+                    <div class="icon-info">
+                        <p><strong>Close Menu</strong></p>
+                        <p>Font Awesome: fas fa-times</p>
+                        <p>Size: 1.5rem (24px)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Layout Dimensions -->
+            <h2>Layout Dimensions</h2>
+            <div class="dimensions-section">
+                <div class="dimension-card">
+                    <h3>Container Widths</h3>
+                    <p><strong>Main Container:</strong> max-width: 1200px</p>
+                    <p><strong>Content Padding:</strong> 40px 20px</p>
+                    <p><strong>Navbar Height:</strong> 70px</p>
+                </div>
+                <div class="dimension-card">
+                    <h3>Breakpoints</h3>
+                    <p><strong>Mobile:</strong> max-width: 768px</p>
+                    <p><strong>Desktop:</strong> min-width: 769px</p>
+                </div>
+                <div class="dimension-card">
+                    <h3>Spacing</h3>
+                    <p><strong>Grid Gap:</strong> 20px</p>
+                    <p><strong>Card Padding:</strong> 20px</p>
+                    <p><strong>Line Height:</strong> 1.6</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div class="page" id="contact">
+            <h1>Contact Me</h1>
+            <p>Feel free to reach out if you have any questions about this assignment.</p>
+            
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <ul>
+                    <li><i class="fas fa-phone"></i> Phone: (876) 220-9798</li>
+                    <li><i class="fas fa-envelope"></i> Email: ZAYNE-MICHAELMPLUMMER@students.utech.edu.jm</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Location: Jamaica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>My Cool Website &copy; 2025 | Created by Zayne-Michael Plummer</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            // Change hamburger icon
+            const icon = hamburger.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Page navigation
+        document.querySelectorAll('.nav-link, .logo').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Get the target page
+                const targetPage = link.getAttribute('data-page');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                link.classList.add('active');
+                
+                // Show the target page
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(targetPage).classList.add('active');
+                
+                // Close mobile menu after clicking a link
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    // Reset hamburger icon
+                    const icon = hamburger.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+                
+                // Scroll to top of page
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-container') && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                // Reset hamburger icon
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
